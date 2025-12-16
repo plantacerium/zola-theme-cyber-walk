@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<article class="post-detail">
+    <header class="post-header">
+        <h1 class="post-title">{{ page.title }}</h1>
+        
+        <div class="system-info glow-box">
+            <p>> **STATUS**: [ ARCHIVED ]</p>
+            <p>> **DATE_CREATED**: [ {{ page.date | date(format="%Y-%m-%d %H:%M:%S") }} ]</p>
+            <p>> **AUTHOR**: [ SYSTEM ]</p>
+            <p>> **CATEGORY**: [ 
+                {% for category in page.taxonomies.categories %}
+                    <a href="{{ get_taxonomy_url(kind="categories", name=category) }}">/{{ category }}</a>{% if not loop.last %} | {% endif %}
+                {% endfor %}
+            ]</p>
+            <p>> **TAGS**: [
+                {% for tag in page.taxonomies.tags %}
+                    #{{ tag }}{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            ]</p>
+        </div>
+    </header>
+
+    <section class="post-content">
+        {{ page.content | safe }}
+    </section>
+
+    <footer class="post-footer">
+        <hr class="glow-divider">
+        <p class="return-prompt">
+            <a href="/">
+                > cd ../.. <br>
+                > RETURN TO ROOT_SYSTEM
+            </a>
+        </p>
+    </footer>
+
+</article>
+{% endblock content %}

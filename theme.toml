@@ -1,0 +1,12 @@
+name = "CyberWalk"
+description = "A dark, glowing, cyberpunk-themed Zola theme for developers and technical writers."
+version = "1.0.0"
+license = "MIT"
+homepage = "https://github.com/plantacerium/zola-theme-cyber-walk"
+repository = "https://github.com/plantacerium/zola-theme-cyber-walk"
+tags = ["blog", "cyberpunk", "dark", "terminal", "portfolio"]
+min_zola_version = "0.17.0"
+
+[extra]
+# Any theme-specific configuration defaults can go here, 
+# though usually they are in the user's config.toml

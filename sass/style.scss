@@ -1,0 +1,327 @@
+/* VARIABLES */
+$bg-color: #050505;
+$text-color: #e0e0e0;
+$glow-color: #00ff41; /* Matrix/Terminal Green */
+$accent-color: #ff00ff; /* Cyberpunk Pink */
+$font-stack: 'Courier New', Courier, monospace;
+
+/* RESET & BASE */
+* { box-sizing: border-box; }
+
+body {
+    background-color: $bg-color;
+    color: $text-color;
+    font-family: $font-stack;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+a { 
+    color: $glow-color; 
+    text-decoration: none; 
+    transition: all 0.3s;
+    
+    &:hover {
+        text-shadow: 0 0 8px $glow-color;
+        color: #fff;
+    }
+}
+
+/* GLOW UTILITIES */
+.glow-box {
+    border: 1px solid $glow-color;
+    box-shadow: 0 0 5px rgba($glow-color, 0.2);
+    padding: 1rem;
+    background: rgba(0, 20, 0, 0.3);
+    
+    &:hover {
+        box-shadow: 0 0 15px rgba($glow-color, 0.6);
+        border-color: #fff;
+    }
+}
+
+/* WALKTHROUGH MENU */
+nav.main-menu {
+    position: sticky;
+    top: 0;
+    background: rgba(0,0,0,0.9);
+    z-index: 100;
+    border-bottom: 2px solid $accent-color;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+
+    button.walkthrough-btn {
+        background: transparent;
+        border: 1px solid $accent-color;
+        color: $accent-color;
+        font-family: $font-stack;
+        font-weight: bold;
+        text-transform: uppercase;
+        cursor: pointer;
+        padding: 10px 20px;
+        
+        &:hover {
+            background: $accent-color;
+            color: #000;
+            box-shadow: 0 0 15px $accent-color;
+        }
+    }
+}
+
+/* MAIN LAYOUT */
+.container {
+    max-width: 95vw;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+h1.site-title {
+    font-size: 4rem;
+    text-align: center;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px $glow-color, 0 0 20px $glow-color;
+    margin: 40px 0;
+}
+
+/* 5-COLUMN BLOG GRID */
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* The 5 columns */
+    gap: 15px;
+    margin-bottom: 50px;
+
+    @media (max-width: 1200px) { grid-template-columns: repeat(3, 1fr); }
+    @media (max-width: 800px) { grid-template-columns: repeat(1, 1fr); }
+
+    .blog-card {
+        @extend .glow-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 250px;
+        
+        h2 { font-size: 1.2rem; margin-top: 0; }
+        .date { font-size: 0.8rem; opacity: 0.7; }
+        
+        .card-actions {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            
+            button.quick-view-btn {
+                background: none;
+                border: 1px dashed $text-color;
+                color: $text-color;
+                cursor: pointer;
+                &:hover { background: $text-color; color: #000; }
+            }
+        }
+    }
+}
+
+/* FILE SYSTEM CATEGORIES */
+.fs-section-title {
+    border-bottom: 1px solid $text-color;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    font-size: 2rem;
+}
+
+/* CATEGORY GRID */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 50px;
+
+    .category-card {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        
+        &:hover {
+            transform: translateY(-2px);
+            background: rgba($glow-color, 0.15);
+            
+            .terminal-icon span {
+                text-shadow: 0 0 10px $accent-color;
+                color: #fff;
+            }
+        }
+
+        .terminal-icon {
+            font-size: 2rem;
+            color: $accent-color;
+            margin-right: 20px;
+            
+            span { transition: all 0.3s; }
+        }
+        
+        .cat-details {
+            display: flex;
+            flex-direction: column;
+            
+            h3 {
+                margin: 0;
+                font-size: 1.2rem;
+                color: #fff;
+                font-family: 'Courier New', monospace;
+            }
+            
+            .file-count {
+                font-size: 0.8rem;
+                color: $glow-color;
+                margin-top: 5px;
+            }
+        }
+    }
+}
+
+/* QUICK VIEW MODAL */
+#qv-modal {
+    display: none;
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
+    background: #000;
+    border: 2px solid $glow-color;
+    z-index: 1000;
+    padding: 40px;
+    overflow-y: auto;
+    box-shadow: 0 0 100px rgba($glow-color, 0.5);
+
+    &.active { display: block; }
+    
+    .close-btn {
+        position: absolute;
+        top: 10px; right: 20px;
+        font-size: 2rem;
+        cursor: pointer;
+        color: red;
+    }
+}
+#modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    z-index: 999;
+    &.active { display: block; }
+}
+/* TERMINAL BOOT TEXT */
+.terminal-boot-sequence {
+    font-family: 'Courier New', monospace;
+    color: #00ff41; /* Matrix Green */
+    background: #000;
+    padding: 15px;
+    border-left: 3px solid #00ff41;
+    margin-bottom: 30px;
+    font-size: 0.9rem;
+    
+    p { margin: 0; padding: 0; }
+    
+    .blink {
+        animation: blinker 1s linear infinite;
+        font-weight: bold;
+        color: #fff;
+    }
+}
+
+@keyframes blinker {
+    50% { opacity: 0; }
+}
+
+/* --- POST PAGE STYLING --- */
+
+.post-detail {
+    max-width: 850px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.post-header {
+    margin-bottom: 30px;
+}
+
+.post-title {
+    font-size: 3rem;
+    color: #fff;
+    text-shadow: 0 0 5px $accent-color; /* Pink Glow for title */
+    border-bottom: 2px solid $glow-color;
+    padding-bottom: 15px;
+}
+
+/* System Info Block */
+.system-info {
+    font-size: 0.9rem;
+    margin-top: 20px;
+    
+    p { 
+        margin: 5px 0; 
+        color: $text-color; 
+    }
+    
+    a { 
+        font-weight: bold; 
+        text-shadow: none; 
+        color: $glow-color; 
+    }
+}
+
+/* Post Content Styling (Code and Markdown) */
+.post-content {
+    h2 { 
+        color: $glow-color; 
+        border-bottom: 1px dashed #333;
+        padding-bottom: 5px;
+        margin-top: 40px;
+    }
+    
+    /* Zola Code Block Styling */
+    pre, code {
+        font-family: $font-stack;
+        background: #1a1a1a;
+        padding: 15px;
+        border: 1px solid #333;
+        overflow-x: auto;
+        display: block;
+        margin: 20px 0;
+        box-shadow: 0 0 10px rgba($glow-color, 0.1);
+    }
+    
+    pre {
+        color: $glow-color; /* Ensure code text itself glows */
+        white-space: pre-wrap; /* Better wrapping for long lines */
+    }
+}
+
+/* Post Footer */
+.post-footer {
+    margin-top: 50px;
+    
+    .glow-divider {
+        border: 0;
+        height: 1px;
+        background-image: linear-gradient(to right, rgba($glow-color, 0), rgba($glow-color, 0.75), rgba($glow-color, 0));
+    }
+    
+    .return-prompt {
+        text-align: center;
+        font-size: 1.2rem;
+        font-weight: bold;
+        
+        a {
+            line-height: 1.5;
+            display: block;
+            &:hover { color: $accent-color; }
+        }
+    }
+}

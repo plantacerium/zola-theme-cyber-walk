@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% set kind_name = "" %}
+{% if taxonomy and taxonomy.name %}
+{% set kind_name = taxonomy.name | upper %}
+{% else %}
+{% if current_url is containing("tags") %}
+{% set kind_name = "TAGS" %}
+{% else %}
+{% set kind_name = "CATEGORIES" %}
+{% endif %}
+{% endif %}
+
+<h1 class="site-title">&lt;
+    echo "{{ kind_name }}_INDEX.list"
+    /&gt;</h1>
+
+{% set terms = terms %}
+
+<div class="category-grid">
+    {% for item in terms %}
+    <a href="{{ item.permalink }}" class="category-card glow-box">
+        <div class="terminal-icon">
+            <span>#</span>
+        </div>
+        <div class="cat-details">
+            <h3>{{ item.name }}</h3>
+            <span class="file-count">[ {{ item.pages | length }} FILES ]</span>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+
+<footer class="post-footer" style="margin-top: 50px;">
+    <hr class="glow-divider">
+    <p class="return-prompt">
+        <a href="/">
+            > cd .. <br>
+            > RETURN TO ROOT_SYSTEM
+        </a>
+    </p>
+</footer>
+
+{% endblock content %}

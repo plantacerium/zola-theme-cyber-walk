@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ config.title }}</title>
+    <link rel="stylesheet" href="{{ get_url(path="style.css") }}">
+</head>
+<body>
+
+    <nav class="main-menu">
+        <button class="walkthrough-btn" onclick="startWalkthrough(1)">Slow Walk</button>
+        <button class="walkthrough-btn" onclick="startWalkthrough(2)">Fast Scan</button>
+        <button class="walkthrough-btn" onclick="location.href='/'">Root /</button>
+    </nav>
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <div id="modal-overlay"></div>
+    <div id="qv-modal">
+        <span class="close-btn">&times;</span>
+        <div id="qv-content"></div>
+    </div>
+
+    <script src="{{ get_url(path="js/script.js") }}"></script>
+</body>
+</html>

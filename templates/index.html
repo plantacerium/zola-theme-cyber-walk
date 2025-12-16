@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="site-title">&lt; {{ config.title }} /&gt;</h1>
+
+<div class="intro-console">
+    {{ section.content | safe }}
+</div>
+
+<div class="blog-grid">
+    {% set section = get_section(path="_index.md") %}
+    {% for page in section.pages | slice(end=25) %}
+    <article class="blog-card">
+        <div class="card-header">
+            <div class="date">{{ page.date }}</div>
+            <h2>{{ page.title }}</h2>
+            <p>{{ page.description | default(value="No description") | truncate(length=50) }}</p>
+        </div>
+
+        <div class="card-actions">
+            <a href="{{ page.permalink }}">[ OPEN ]</a>
+            <button class="quick-view-btn">[ QUICK VIEW ]</button>
+        </div>
+
+        <div class="hidden-content" style="display:none;">
+            <h1>{{ page.title }}</h1>
+            {{ page.content | safe }}
+            <br>
+            <a href="{{ page.permalink }}" style="font-size: 2rem;">[ GO TO PERMALINK ]</a>
+        </div>
+    </article>
+    {% endfor %}
+</div>
+
+<h2 class="fs-section-title">/usr/local/categories</h2>
+
+<div class="category-grid">
+    {% set all_cats = get_taxonomy(kind="categories") %}
+    {% for cat in all_cats.items %}
+    <a href="{{ cat.permalink }}" class="category-card glow-box">
+        <div class="terminal-icon">
+            <span>&gt;_</span>
+        </div>
+        <div class="cat-details">
+            <h3>{{ cat.name }}</h3>
+            <span class="file-count">[ {{ cat.pages | length }} FILES ]</span>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+{% endblock %}

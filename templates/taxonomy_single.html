@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="site-title">&lt;
+    {% set kind = taxonomy.name | upper %}
+    {% set name = term.name | upper %}
+    echo "QUERY: {{ kind }}/{{ name }}"
+    /&gt;</h1>
+
+<div class="system-info glow-box" style="margin-top: 20px;">
+    <p>> **TERM_NAME**: [ {{ term.name }} ]</p>
+    <p>> **SCOPE**: [ {{ taxonomy.name | upper }} ]</p>
+    <p>> **FILE_COUNT**: [ {{ term.pages | length }} documents found. ]</p>
+</div>
+
+<section class="term-description">
+    {% if term.content %}
+    {{ term.content | safe }}
+    {% endif %}
+    <hr class="glow-divider">
+</section>
+
+
+<h2 class="fs-section-title" style="margin-top: 40px;">/search/results/</h2>
+
+<div class="blog-grid">
+    {% for page in term.pages %}
+    <article class="blog-card">
+        <div class="card-header">
+            <div class="date">{{ page.date }}</div>
+            <h2>{{ page.title }}</h2>
+            <p>{{ page.description | default(value="No description") | truncate(length=50) }}</p>
+        </div>
+
+        <div class="card-actions">
+            <a href="{{ page.permalink }}">[ OPEN ]</a>
+            <a href="{{ page.permalink }}">[ VIEW DETAIL ]</a>
+        </div>
+    </article>
+    {% endfor %}
+</div>
+
+<footer class="post-footer">
+    <hr class="glow-divider">
+    <p class="return-prompt">
+        <a href="{{ config.base_url }}/{{ taxonomy.name }}">
+            > cd .. <br>
+            > RETURN TO {{ taxonomy.name | upper }}_INDEX
+        </a>
+    </p>
+</footer>
+{% endblock content %}
